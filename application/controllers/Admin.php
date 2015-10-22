@@ -32,8 +32,13 @@ class Admin extends Application {
 
     function present($quote) {
         $this->load->helper('formfields');
-
-        $this->data['fid'] = makeTextField('ID#', 'id', $quote->id);
+        $message = '';
+        if(count($this->errors) > 0) {
+            foreach($this->errors as $booboo)
+                $message .= $booboo . BR;
+        }
+        $this->data['message'] = $message;
+        $this->data['fid'] = makeTextField('ID#', 'id', $quote->id, "Unique quote identifier, system-assigned",10,10,true); 
         $this->data['fwho'] = makeTextField('Author', 'who', $quote->who);
         $this->data['fmug'] = makeTextField('Picture', 'mug', $quote->mug);
         $this->data['fwhat'] = makeTextArea('The Quote', 'what', $quote->what);
@@ -48,6 +53,14 @@ class Admin extends Application {
         $record->who = $this->input->post('who');
         $record->mug = $this->input->post('mug');
         $record->what = $this->input->post('what');
+        if (empty($record->who))
+            $this->errors[] = 'You must specify an author.';
+        if (strlen($record->what) < 20)
+            $this->errors[] = 'A quotation must be at least 20 characters long.';
+        if (count($this->errors) > 0) {
+            $this->present($record);
+            return; // make sure we don't try to save anything
+        }
         if (empty($record->id)){
             $this->quotes->add($record);
         }
