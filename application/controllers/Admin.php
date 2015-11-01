@@ -72,5 +72,5 @@ class Admin extends Application {
     }
 }
 
-/* End of file Welcome.php */
-/* Location: application/controllers/Welcome.php */
+/* End of file Admin.php */
+/* Location: application/controllers/Admin.php */

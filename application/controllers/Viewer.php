@@ -53,5 +53,5 @@ class Viewer extends Application {
     }
 }
 
-/* End of file Welcome.php */
-/* Location: application/controllers/Welcome.php */
+/* End of file Viewer.php */
+/* Location: application/controllers/Viewer.php */
